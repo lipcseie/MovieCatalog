@@ -13,5 +13,8 @@ namespace Vidzy
         public string Name { get; set; }
 
         public DateTime RealeaseDate { get; set; }
+
+        public byte GenreId { get; set; }
+        public ICollection<Genre> Genres { get; set; } = new List <Genre>();
     }
 }
