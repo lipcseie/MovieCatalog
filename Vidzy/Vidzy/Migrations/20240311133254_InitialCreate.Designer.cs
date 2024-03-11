@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vidzy;
 
@@ -11,9 +12,11 @@ using Vidzy;
 namespace Vidzy.Migrations
 {
     [DbContext(typeof(VidzyDbContext))]
-    partial class VidzyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240311133254_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,12 +25,28 @@ namespace Vidzy.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GenreVideo", b =>
+                {
+                    b.Property<byte>("GenresId")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("VideosId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenresId", "VideosId");
+
+                    b.HasIndex("VideosId");
+
+                    b.ToTable("VideoGenres", (string)null);
+                });
+
             modelBuilder.Entity("Vidzy.Genre", b =>
                 {
                     b.Property<byte>("Id")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -59,6 +78,7 @@ namespace Vidzy.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RealeaseDate")
@@ -66,25 +86,22 @@ namespace Vidzy.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenreId");
-
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("Vidzy.Video", b =>
+            modelBuilder.Entity("GenreVideo", b =>
                 {
-                    b.HasOne("Vidzy.Genre", "Genres")
-                        .WithMany("Videos")
-                        .HasForeignKey("GenreId")
+                    b.HasOne("Vidzy.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Genres");
-                });
-
-            modelBuilder.Entity("Vidzy.Genre", b =>
-                {
-                    b.Navigation("Videos");
+                    b.HasOne("Vidzy.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -19,10 +19,9 @@ namespace Vidzy
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Video>()
-                        .HasMany(v => v.Genres)
-                        .WithMany(g => g.Videos)
-                        .UsingEntity(j => j.ToTable("VideoGenres"));
+            modelBuilder.Entity<Genre>()
+                        .HasMany(g => g.Videos)
+                        .WithOne(v => v.Genres);
 
             modelBuilder.Entity<Genre>().HasData(
 
