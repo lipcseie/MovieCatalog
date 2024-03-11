@@ -17,5 +17,8 @@ namespace Vidzy
         public byte GenreId { get; set; }
 
         public Genre? Genres { get; set; }
+
+        public Classification Classification { get; set; }
+
     }
 }
