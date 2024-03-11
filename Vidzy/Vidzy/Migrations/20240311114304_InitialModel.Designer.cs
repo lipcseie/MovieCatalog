@@ -12,8 +12,8 @@ using Vidzy;
 namespace Vidzy.Migrations
 {
     [DbContext(typeof(VidzyDbContext))]
-    [Migration("20240309151247_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240311114304_InitialModel")]
+    partial class InitialModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace Vidzy.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("GenreVideo", b =>
+                {
+                    b.Property<byte>("GenresId")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("VideosId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenresId", "VideosId");
+
+                    b.HasIndex("VideosId");
+
+                    b.ToTable("VideoGenres", (string)null);
+                });
 
             modelBuilder.Entity("Vidzy.Genre", b =>
                 {
@@ -37,6 +52,18 @@ namespace Vidzy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "Fantasy"
+                        });
                 });
 
             modelBuilder.Entity("Vidzy.Video", b =>
@@ -46,6 +73,9 @@ namespace Vidzy.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<byte>("GenreId")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -57,6 +87,21 @@ namespace Vidzy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("GenreVideo", b =>
+                {
+                    b.HasOne("Vidzy.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vidzy.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

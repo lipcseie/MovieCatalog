@@ -24,6 +24,13 @@ namespace Vidzy
                         .WithMany(g => g.Videos)
                         .UsingEntity(j => j.ToTable("VideoGenres"));
 
+            modelBuilder.Entity<Genre>().HasData(
+
+                new Genre { Id = 1, Name = "Action" },
+                new Genre { Id = 2, Name = "Fantasy" }
+
+                );
+
             base.OnModelCreating(modelBuilder); 
         }
 

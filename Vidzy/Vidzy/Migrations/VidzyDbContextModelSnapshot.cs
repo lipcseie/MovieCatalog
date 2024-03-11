@@ -49,6 +49,18 @@ namespace Vidzy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "Fantasy"
+                        });
                 });
 
             modelBuilder.Entity("Vidzy.Video", b =>
