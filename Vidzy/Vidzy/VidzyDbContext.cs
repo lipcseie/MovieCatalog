@@ -30,6 +30,16 @@ namespace Vidzy
 
                 );
 
+            modelBuilder.Entity<Video>()
+                .Property(v => v.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<Genre>()
+                .Property(g => g.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
             base.OnModelCreating(modelBuilder); 
         }
 
