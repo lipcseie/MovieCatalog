@@ -40,6 +40,11 @@ namespace Vidzy
                 .IsRequired()
                 .HasMaxLength(255);
 
+            modelBuilder.Entity<Video>()
+                .HasMany(t => t.Tags)
+                .WithMany(v => v.Videos)
+                .UsingEntity(j => j.ToTable("VideoTags"));
+
             base.OnModelCreating(modelBuilder); 
         }
 

@@ -22,6 +22,21 @@ namespace Vidzy.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TagVideo", b =>
+                {
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VideosId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TagsId", "VideosId");
+
+                    b.HasIndex("VideosId");
+
+                    b.ToTable("VideoTags", (string)null);
+                });
+
             modelBuilder.Entity("Vidzy.Genre", b =>
                 {
                     b.Property<byte>("Id")
@@ -49,6 +64,22 @@ namespace Vidzy.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Vidzy.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("Vidzy.Video", b =>
                 {
                     b.Property<int>("Id")
@@ -68,7 +99,7 @@ namespace Vidzy.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("RealeaseDate")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -76,6 +107,21 @@ namespace Vidzy.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("TagVideo", b =>
+                {
+                    b.HasOne("Vidzy.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vidzy.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Vidzy.Video", b =>
