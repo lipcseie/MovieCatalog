@@ -23,12 +23,12 @@ namespace Vidzy
                         .HasMany(g => g.Videos)
                         .WithOne(v => v.Genres);
 
-            modelBuilder.Entity<Genre>().HasData(
+            //modelBuilder.Entity<Genre>().HasData(
 
-                new Genre { Id = 1, Name = "Action" },
-                new Genre { Id = 2, Name = "Fantasy" }
+            //    new Genre { Id = 1, Name = "Action" },
+            //    new Genre { Id = 2, Name = "Fantasy" }
 
-                );
+            //    );
 
             modelBuilder.Entity<Video>()
                 .Property(v => v.Name)

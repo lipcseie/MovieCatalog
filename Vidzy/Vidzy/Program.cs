@@ -6,15 +6,17 @@
         {
             using (var context = new VidzyDbContext())
             {
-                var actionGenre = new Genre { Id = 3, Name = "Action2" };
-                var fantasyGenre = new Genre { Id = 4, Name = "Fantasy2" };
+                var actionGenre = new Genre { Id = 1, Name = "Action" };
+                var fantasyGenre = new Genre { Id = 2, Name = "Fantasy" };
+                var comedyGenre = new Genre { Id = 3, Name = "Comedy" };
 
-                var LOTR = new Video { Name = "LOTR", ReleaseDate = new DateTime(2002, 01, 15), Genres = fantasyGenre };
-                var Matrix = new Video { Name = "Matric", ReleaseDate = new DateTime(1999, 02, 02), Genres = actionGenre };
-                var LOTR2 = new Video { Name = "LOTR2", ReleaseDate = new DateTime(2004, 06, 12), Genres = fantasyGenre };
+                var video1 = new Video { Name = "The Matrix", ReleaseDate = DateTime.Parse("1999-03-31"), Genres = actionGenre, Classification =  Classification.Gold };
+                var video2 = new Video { Name = "Inception", ReleaseDate = DateTime.Parse("2010-07-16"), Genres = actionGenre, Classification = Classification.Silver };
+                var video3 = new Video { Name = "The Lord of the Rings: The Fellowship of the Ring", ReleaseDate = DateTime.Parse("2001-12-19"), Genres = fantasyGenre, Classification = Classification.Platinum };
+                var video4 = new Video { Name = "Shrek", ReleaseDate = DateTime.Parse("2001-04-22"), Genres = comedyGenre, Classification = Classification.Silver };
 
-                context.Genres.AddRange(actionGenre, fantasyGenre);
-                context.Videos.AddRange(LOTR, Matrix, LOTR2);
+                context.Genres.AddRange(actionGenre, fantasyGenre, comedyGenre);
+                context.Videos.AddRange(video1, video2, video3, video4);
 
                 context.SaveChanges();
 
