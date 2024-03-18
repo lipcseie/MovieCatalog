@@ -69,7 +69,18 @@ namespace Vidzy
                     Console.WriteLine("Genre: ");
                     Console.WriteLine(video.Genres.Name);
                 }
-      
+
+                // *** Retrieve all genres along with the count of videos in each genre. ***
+
+                var genres = context.Videos
+                    .Include(v => v.Genres).ToList();
+
+                Console.WriteLine("Retrieve all genres along with the count of videos in each genre.");
+                foreach (var g in genres)
+                {
+                    Console.WriteLine(g.Genres);
+                }
+
 
             }
         }
