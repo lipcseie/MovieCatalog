@@ -20,14 +20,27 @@
 
                 //context.SaveChanges();
 
+                // *** Retrieve all videos from the database. ***
+
                 var allVideos = context.Videos.ToList();
 
-               Console.WriteLine("All videos: ");
+               Console.WriteLine("All videos:");
                 foreach( var v in allVideos)
                 {
                     Console.WriteLine(v.Name);
                 }
 
+                // *** Retrieve all videos released after a specific date. ***
+
+                var after2000 = context.Videos
+                    .Where(v => v.ReleaseDate > new DateTime(2000,1,1));
+
+                Console.WriteLine("Movies after 2000: ");
+
+                foreach ( var v in after2000)
+                {
+                    Console.WriteLine(v.Name, v.ReleaseDate);
+                }
             }
         }
     }
