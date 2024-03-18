@@ -1,4 +1,6 @@
-﻿namespace Vidzy
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Vidzy
 {
     internal class Program
     {
@@ -35,12 +37,40 @@
                 var after2000 = context.Videos
                     .Where(v => v.ReleaseDate > new DateTime(2000,1,1));
 
-                Console.WriteLine("Movies after 2000: ");
+                Console.WriteLine("\nMovies after 2000: ");
 
                 foreach ( var v in after2000)
                 {
                     Console.WriteLine(v.Name, v.ReleaseDate);
                 }
+
+                // *** Retrieve all videos with a particular classification. ***
+
+                var platinum = context.Videos
+                    .Where(v => v.Classification == Classification.Platinum);
+
+
+                Console.WriteLine("\nPlatinum: ");
+                foreach ( var v in platinum)
+                {
+                    Console.WriteLine(v.Name, Classification.Platinum);
+                }
+
+                // *** Retrieve all videos with their associated genres. ***
+
+                var videosWithGenres = context.Videos
+                    .Include(v => v.Genres).ToList();
+                   
+                Console.WriteLine("\nRetrieve all videos with their associated genres");
+
+                foreach(var video in videosWithGenres)
+                {
+                    Console.WriteLine($"Video: {video.Name}");
+                    Console.WriteLine("Genre: ");
+                    Console.WriteLine(video.Genres.Name);
+                }
+      
+
             }
         }
     }
