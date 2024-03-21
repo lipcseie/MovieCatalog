@@ -84,12 +84,17 @@ namespace Vidzy
 
                 // Add data
 
+                var genres = context.Genres.ToList();
+
+                var genre = context.Genres.Single(g => g.Id == 2);
+
                 var video5 = new Video 
-                { Name = "Shrek 2",
-                  ReleaseDate = DateTime.Parse("2003-04-22"), 
-                  GenreId = 2, 
+                { Name = "Shrek 3",
+                  ReleaseDate = DateTime.Parse("2005-04-22"), 
+                  Genres = genre, 
                   Classification = Classification.Silver 
                 };
+
 
                 context.Videos.Add(video5);
 
