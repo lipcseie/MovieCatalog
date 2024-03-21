@@ -82,21 +82,28 @@ namespace Vidzy
                 // *** Retrieve all genres along with the count of videos in each genre. ***
 
 
-                // Add data
+                // *** Add data ***
 
-                var genres = context.Genres.ToList();
+                //var genres = context.Genres.ToList();
 
-                var genre = context.Genres.Single(g => g.Id == 2);
+                //var genre = context.Genres.Single(g => g.Id == 2);
 
-                var video5 = new Video 
-                { Name = "Shrek 3",
-                  ReleaseDate = DateTime.Parse("2005-04-22"), 
-                  Genres = genre, 
-                  Classification = Classification.Silver 
-                };
+                //var video5 = new Video 
+                //{ Name = "Shrek 3",
+                //  ReleaseDate = DateTime.Parse("2005-04-22"), 
+                //  Genres = genre, 
+                //  // GenreId = 2,
+                //  Classification = Classification.Silver 
+                //};
 
 
-                context.Videos.Add(video5);
+                //context.Videos.Add(video5);
+
+                // *** Modify data **
+
+                var video6 = context.Videos.Find(4);
+                video6.Name = "New Name";
+                video6.GenreId = 2;
 
                 context.SaveChanges();
 
