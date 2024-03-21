@@ -41,7 +41,10 @@ namespace Vidzy
 
                 foreach ( var v in after2000)
                 {
-                    Console.WriteLine(v.Name, v.ReleaseDate);
+                    if(v != null)
+                    {
+                        Console.WriteLine(v.Name);
+                    }
                 }
 
                 // *** Retrieve all videos with a particular classification. ***
@@ -53,7 +56,10 @@ namespace Vidzy
                 Console.WriteLine("\nPlatinum: ");
                 foreach ( var v in platinum)
                 {
-                    Console.WriteLine(v.Name, Classification.Platinum);
+                    if(v != null)
+                    {
+                        Console.WriteLine($"{v.Name}, {Classification.Platinum}");
+                    }
                 }
 
                 // *** Retrieve all videos with their associated genres. ***
@@ -65,21 +71,30 @@ namespace Vidzy
 
                 foreach(var video in videosWithGenres)
                 {
-                    Console.WriteLine($"Video: {video.Name}");
-                    Console.WriteLine("Genre: ");
-                    Console.WriteLine(video.Genres.Name);
+                    if(video != null && video.Genres != null)
+                    {
+                        Console.WriteLine($"Video: {video.Name}");
+                        Console.WriteLine("Genre: ");
+                        Console.WriteLine(video.Genres.Name);
+                    }
                 }
 
                 // *** Retrieve all genres along with the count of videos in each genre. ***
 
-                var genres = context.Videos
-                    .Include(v => v.Genres).ToList();
 
-                Console.WriteLine("Retrieve all genres along with the count of videos in each genre.");
-                foreach (var g in genres)
-                {
-                    Console.WriteLine(g.Genres);
-                }
+                // Add data
+
+                var video5 = new Video 
+                { Name = "Shrek 2",
+                  ReleaseDate = DateTime.Parse("2003-04-22"), 
+                  GenreId = 2, 
+                  Classification = Classification.Silver 
+                };
+
+                context.Videos.Add(video5);
+
+                context.SaveChanges();
+
 
 
             }
