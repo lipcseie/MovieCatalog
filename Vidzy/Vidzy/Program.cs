@@ -84,30 +84,34 @@ namespace Vidzy
 
                 // *** Add data ***
 
-                //var genres = context.Genres.ToList();
 
-                //var genre = context.Genres.Single(g => g.Id == 2);
+                var genre = context.Genres.Single(g => g.Id == 2);
 
-                //var video5 = new Video 
-                //{ Name = "Shrek 3",
-                //  ReleaseDate = DateTime.Parse("2005-04-22"), 
-                //  Genres = genre, 
-                //  // GenreId = 2,
-                //  Classification = Classification.Silver 
-                //};
+                var video5 = new Video
+                {
+                    Name = "Shrek 4",
+                    ReleaseDate = DateTime.Parse("2010-04-22"),
+                    Genres = genre,
+                    // GenreId = 2,
+                    Classification = Classification.Silver
+                };
 
 
-                //context.Videos.Add(video5);
+                // context.Videos.Add(video5);
 
                 // *** Modify data **
 
-                var video6 = context.Videos.Find(4);
-                video6.Name = "New Name";
+                var video6 = context.Videos.Find(4); // Single(v => v.Id == 4)
+                video6.Name = "New Name 2";
                 video6.GenreId = 2;
 
+                 
+                // *** Remove data ***
+
+                var video7 = context.Videos.Find(12);
+                context.Videos.Remove(video7);
+
                 context.SaveChanges();
-
-
 
             }
         }
