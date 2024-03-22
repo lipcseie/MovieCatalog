@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vidzy
+namespace Movies.Models
 {
     public class MovieDirector
     {

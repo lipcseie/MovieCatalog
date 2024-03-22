@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vidzy
+namespace Movies.Models
 {
-    public class Genre
+    public class Tag
     {
-        public byte Id { get; set; }
+        public int Id { get; set; }
 
         public string? Name { get; set; }
 
