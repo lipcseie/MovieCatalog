@@ -4,7 +4,7 @@ using Movies.Models;
 using System.Linq;
 
 
-namespace Vidzy
+namespace Movies.Context
 {
     public class MovieLibraryDbContext : DbContext
     {
@@ -58,7 +58,7 @@ namespace Vidzy
                 .WithMany(d => d.MovieDirectors)
                 .HasForeignKey(md => md.DirectorId);
 
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

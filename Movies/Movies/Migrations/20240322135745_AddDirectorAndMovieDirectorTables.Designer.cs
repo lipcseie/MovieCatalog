@@ -12,7 +12,7 @@ using Movies.Context;
 
 namespace Vidzy.Migrations
 {
-    [DbContext(typeof(MovieLibraryDbContext))]
+    [DbContext(typeof(MoviesDbContext))]
     [Migration("20240322135745_AddDirectorAndMovieDirectorTables")]
     partial class AddDirectorAndMovieDirectorTables
     {

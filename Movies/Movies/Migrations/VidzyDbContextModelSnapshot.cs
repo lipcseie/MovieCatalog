@@ -11,7 +11,7 @@ using Movies.Context;
 
 namespace Vidzy.Migrations
 {
-    [DbContext(typeof(MovieLibraryDbContext))]
+    [DbContext(typeof(MoviesDbContext))]
     partial class VidzyDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
