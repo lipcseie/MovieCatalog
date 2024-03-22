@@ -11,7 +11,7 @@ using Vidzy;
 
 namespace Vidzy.Migrations
 {
-    [DbContext(typeof(VidzyDbContext))]
+    [DbContext(typeof(MovieLibraryDbContext))]
     [Migration("20240318170617_Initialcreate")]
     partial class Initialcreate
     {

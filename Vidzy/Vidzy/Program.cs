@@ -6,7 +6,7 @@ namespace Vidzy
     {
         static void Main(string[] args)
         {
-            using (var context = new VidzyDbContext())
+            using (var context = new MovieLibraryDbContext())
             {
                 //var actionGenre = new Genre { Id = 1, Name = "Action" };
                 //var fantasyGenre = new Genre { Id = 2, Name = "Fantasy" };
@@ -24,7 +24,7 @@ namespace Vidzy
 
                 // *** Retrieve all videos from the database. ***
 
-                var allVideos = context.Videos.ToList();
+                var allVideos = context.Movies.ToList();
 
                Console.WriteLine("All videos:");
                 foreach( var v in allVideos)
@@ -34,7 +34,7 @@ namespace Vidzy
 
                 // *** Retrieve all videos released after a specific date. ***
 
-                var after2000 = context.Videos
+                var after2000 = context.Movies
                     .Where(v => v.ReleaseDate > new DateTime(2000,1,1));
 
                 Console.WriteLine("\nMovies after 2000: ");
@@ -49,7 +49,7 @@ namespace Vidzy
 
                 // *** Retrieve all videos with a particular classification. ***
 
-                var platinum = context.Videos
+                var platinum = context.Movies
                     .Where(v => v.Classification == Classification.Platinum);
 
 
@@ -64,7 +64,7 @@ namespace Vidzy
 
                 // *** Retrieve all videos with their associated genres. ***
 
-                var videosWithGenres = context.Videos
+                var videosWithGenres = context.Movies
                     .Include(v => v.Genres).ToList();
                    
                 Console.WriteLine("\nRetrieve all videos with their associated genres");
@@ -87,7 +87,7 @@ namespace Vidzy
 
                 var genre = context.Genres.Single(g => g.Id == 2);
 
-                var video5 = new Video
+                var video5 = new Movie
                 {
                     Name = "Shrek 4",
                     ReleaseDate = DateTime.Parse("2010-04-22"),
@@ -101,15 +101,15 @@ namespace Vidzy
 
                 // *** Modify data **
 
-                var video6 = context.Videos.Find(4); // Single(v => v.Id == 4)
+                var video6 = context.Movies.Find(4); // Single(v => v.Id == 4)
                 video6.Name = "New Name 2";
                 video6.GenreId = 2;
 
                  
                 // *** Remove data ***
 
-                var video7 = context.Videos.Find(12);
-                context.Videos.Remove(video7);
+                var video7 = context.Movies.Find(12);
+                context.Movies.Remove(video7);
 
                 context.SaveChanges();
 

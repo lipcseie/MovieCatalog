@@ -10,7 +10,7 @@ using Vidzy;
 
 namespace Vidzy.Migrations
 {
-    [DbContext(typeof(VidzyDbContext))]
+    [DbContext(typeof(MovieLibraryDbContext))]
     partial class VidzyDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -22,19 +22,35 @@ namespace Vidzy.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TagVideo", b =>
+            modelBuilder.Entity("MovieTag", b =>
                 {
+                    b.Property<int>("MoviesId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TagsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VideosId")
-                        .HasColumnType("int");
+                    b.HasKey("MoviesId", "TagsId");
 
-                    b.HasKey("TagsId", "VideosId");
-
-                    b.HasIndex("VideosId");
+                    b.HasIndex("TagsId");
 
                     b.ToTable("VideoTags", (string)null);
+                });
+
+            modelBuilder.Entity("Vidzy.Director", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Directors");
                 });
 
             modelBuilder.Entity("Vidzy.Genre", b =>
@@ -52,23 +68,7 @@ namespace Vidzy.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("Vidzy.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tag");
-                });
-
-            modelBuilder.Entity("Vidzy.Video", b =>
+            modelBuilder.Entity("Vidzy.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,28 +94,59 @@ namespace Vidzy.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Videos");
+                    b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("TagVideo", b =>
+            modelBuilder.Entity("Vidzy.MovieDirector", b =>
                 {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DirectorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "DirectorId");
+
+                    b.HasIndex("DirectorId");
+
+                    b.ToTable("MovieDirectors");
+                });
+
+            modelBuilder.Entity("Vidzy.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tag");
+                });
+
+            modelBuilder.Entity("MovieTag", b =>
+                {
+                    b.HasOne("Vidzy.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Vidzy.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Vidzy.Video", null)
-                        .WithMany()
-                        .HasForeignKey("VideosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Vidzy.Video", b =>
+            modelBuilder.Entity("Vidzy.Movie", b =>
                 {
                     b.HasOne("Vidzy.Genre", "Genres")
-                        .WithMany("Videos")
+                        .WithMany("Movies")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -123,9 +154,38 @@ namespace Vidzy.Migrations
                     b.Navigation("Genres");
                 });
 
+            modelBuilder.Entity("Vidzy.MovieDirector", b =>
+                {
+                    b.HasOne("Vidzy.Director", "Director")
+                        .WithMany("MovieDirectors")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vidzy.Movie", "Movie")
+                        .WithMany("MovieDirectors")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Director");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Vidzy.Director", b =>
+                {
+                    b.Navigation("MovieDirectors");
+                });
+
             modelBuilder.Entity("Vidzy.Genre", b =>
                 {
-                    b.Navigation("Videos");
+                    b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("Vidzy.Movie", b =>
+                {
+                    b.Navigation("MovieDirectors");
                 });
 #pragma warning restore 612, 618
         }

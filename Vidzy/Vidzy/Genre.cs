@@ -12,6 +12,6 @@ namespace Vidzy
 
         public string? Name { get; set; }
 
-        public ICollection<Video> Videos { get; set; } = new List<Video>();
+        public ICollection<Movie> Movies { get; set; } = new List<Movie>();
     }
 }
